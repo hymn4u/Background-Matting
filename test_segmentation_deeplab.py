@@ -168,17 +168,17 @@ list_im=glob.glob(dir_name + '/*_img.png'); list_im.sort()
 
 for i in range(0,len(list_im)):
 
-    start = getTimeInMilli()
+	start = getTimeInMilli()
 	image = Image.open(list_im[i])
-    end   = getTimeInMilli()
-    print('image ', i, ' open time: ', end-start)
+	end   = getTimeInMilli()
+	print('image ', i, ' open time: ', end-start)
 
-    start1 = getTimeInMilli()
+	start1 = getTimeInMilli()
 	res_im,seg=MODEL.run(image)
-    end1   = getTimeInMilli()
-    print('image ', i, ' model run time: ', end1-start1)
+	end1   = getTimeInMilli()
+	print('image ', i, ' model run time: ', end1-start1)
 
-    start2 = getTimeInMilli()
+	start2 = getTimeInMilli()
 	seg=cv2.resize(seg.astype(np.uint8),image.size)
 
 	mask_sel=(seg==15).astype(np.float32)
@@ -186,9 +186,9 @@ for i in range(0,len(list_im)):
 
 	name=list_im[i].replace('img','masksDL')
 	cv2.imwrite(name,(255*mask_sel).astype(np.uint8))
-    end2 = getTimeInMilli()
-    print('image ', i, ' resize&write time: ', end2-start2)
-    print('image ', i, ' total time ', end2 - start)
+	end2 = getTimeInMilli()
+	print('image ', i, ' resize&write time: ', end2-start2)
+	print('image ', i, ' total time ', end2 - start)
 
 str_msg='\nDone: ' + dir_name
 print(str_msg)
