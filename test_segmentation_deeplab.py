@@ -10,6 +10,11 @@ import cv2, pdb, glob, argparse
 
 import tensorflow as tf
 
+import time
+
+def getTimeInMilli():
+    return time.time() * 1000;
+
 
 
 class DeepLabModel(object):
@@ -150,8 +155,10 @@ if not os.path.exists(download_path):
 			     download_path)
   print('download completed! loading DeepLab model...')
 
+start = getTimeInMilli()
 MODEL = DeepLabModel(download_path)
-print('model loaded successfully!')
+end   = getTimeInMilli()
+print('model loaded successfully! LoadTime:', end-start)
 
 #######################################################################################
 
@@ -161,10 +168,17 @@ list_im=glob.glob(dir_name + '/*_img.png'); list_im.sort()
 
 for i in range(0,len(list_im)):
 
+    start = getTimeInMilli()
 	image = Image.open(list_im[i])
+    end   = getTimeInMilli()
+    print('image ', i, ' open time: ', end-start)
 
+    start1 = getTimeInMilli()
 	res_im,seg=MODEL.run(image)
+    end1   = getTimeInMilli()
+    print('image ', i, ' model run time: ', end1-start1)
 
+    start2 = getTimeInMilli()
 	seg=cv2.resize(seg.astype(np.uint8),image.size)
 
 	mask_sel=(seg==15).astype(np.float32)
@@ -172,6 +186,9 @@ for i in range(0,len(list_im)):
 
 	name=list_im[i].replace('img','masksDL')
 	cv2.imwrite(name,(255*mask_sel).astype(np.uint8))
+    end2 = getTimeInMilli()
+    print('image ', i, ' resize&write time: ', end2-start2)
+    print('image ', i, ' total time ', end2 - start)
 
 str_msg='\nDone: ' + dir_name
 print(str_msg)
