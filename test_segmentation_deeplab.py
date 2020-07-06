@@ -130,7 +130,7 @@ FULL_LABEL_MAP = np.arange(len(LABEL_NAMES)).reshape(len(LABEL_NAMES), 1)
 FULL_COLOR_MAP = label_to_color_image(FULL_LABEL_MAP)
 
 
-MODEL_NAME = 'xception_coco_voctrainval'  # @param ['mobilenetv2_coco_voctrainaug', 'mobilenetv2_coco_voctrainval', 'xception_coco_voctrainaug', 'xception_coco_voctrainval']
+MODEL_NAME = 'mobilenetv2_coco_voctrainaug'  # @param ['mobilenetv2_coco_voctrainaug', 'mobilenetv2_coco_voctrainval', 'xception_coco_voctrainaug', 'xception_coco_voctrainval']
 
 _DOWNLOAD_URL_PREFIX = 'http://download.tensorflow.org/models/'
 _MODEL_URLS = {
