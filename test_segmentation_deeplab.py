@@ -30,6 +30,7 @@ class DeepLabModel(object):
 		self.graph = tf.Graph()
 		graph_def = None
 		# Extract frozen graph from tar archive.
+		print("tarball_path: ", tarball_path)
 		tar_file = tarfile.open(tarball_path)
 		for tar_info in tar_file.getmembers():
 			if self.FROZEN_GRAPH_NAME in os.path.basename(tar_info.name):
